@@ -140,46 +140,54 @@ struct PuzzleGameView: View {
                             }
                         )
                         .frame(maxWidth: .infinity)
-                        .frame(height: 450) // Фиксированная высота игрового поля
-                        .clipped() // Обрезаем всё что выходит за границы
+                        .frame(height: 450)
+                        .clipped()
                     }
                     
                     Spacer()
-                        .frame(height: 100) // Пространство для таббара
+                        .frame(height: 100)
                 }
             } else {
                 // Start Screen
-                VStack(spacing: 30) {
-                    Text("🧠")
-                        .font(.system(size: 100))
-                    
-                    Text("Ready to challenge your mind?")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 40)
-                    
-                    VStack(spacing: 15) {
-                        ForEach(Puzzle.Difficulty.allCases, id: \.self) { difficulty in
-                            Button(action: {
-                                viewModel.startNewGame(difficulty: difficulty)
-                            }) {
-                                HStack {
-                                    Text(difficulty.rawValue.capitalized)
-                                        .font(.headline)
-                                    Spacer()
-                                    Text("\(difficulty.pieceCount) pieces")
-                                        .font(.subheadline)
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 30) {
+                        Spacer()
+                            .frame(height: 50)
+                        
+                        Text("🧠")
+                            .font(.system(size: 100))
+                        
+                        Text("Ready to challenge your mind?")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 40)
+                        
+                        VStack(spacing: 15) {
+                            ForEach(Puzzle.Difficulty.allCases, id: \.self) { difficulty in
+                                Button(action: {
+                                    viewModel.startNewGame(difficulty: difficulty)
+                                }) {
+                                    HStack {
+                                        Text(difficulty.rawValue.capitalized)
+                                            .font(.headline)
+                                        Spacer()
+                                        Text("\(difficulty.pieceCount) pieces")
+                                            .font(.subheadline)
+                                    }
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(difficultyColor(difficulty))
+                                    .cornerRadius(12)
                                 }
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(difficultyColor(difficulty))
-                                .cornerRadius(12)
                             }
                         }
+                        .padding(.horizontal, 40)
+                        
+                        Spacer()
+                            .frame(height: 100)
                     }
-                    .padding(.horizontal, 40)
                 }
             }
         }

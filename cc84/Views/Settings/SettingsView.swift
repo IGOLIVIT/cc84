@@ -83,25 +83,29 @@ struct SettingsView: View {
                                     .foregroundColor(.white.opacity(0.7))
                                     .padding(.horizontal, 20)
                                 
-                                HStack(spacing: 10) {
-                                    ForEach(Puzzle.Difficulty.allCases, id: \.self) { difficulty in
-                                        Button(action: {
-                                            viewModel.updateDifficulty(difficulty)
-                                        }) {
-                                            Text(difficulty.rawValue.capitalized)
-                                                .font(.subheadline)
-                                                .foregroundColor(.white)
-                                                .padding(.horizontal, 15)
-                                                .padding(.vertical, 8)
-                                                .background(
-                                                    viewModel.user.settings.difficultyPreference == difficulty ?
-                                                    Color(hex: "#ff2300") : Color.white.opacity(0.1)
-                                                )
-                                                .cornerRadius(8)
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 10) {
+                                        ForEach(Puzzle.Difficulty.allCases, id: \.self) { difficulty in
+                                            Button(action: {
+                                                viewModel.updateDifficulty(difficulty)
+                                            }) {
+                                                Text(difficulty.rawValue.capitalized)
+                                                    .font(.subheadline)
+                                                    .fontWeight(.medium)
+                                                    .foregroundColor(.white)
+                                                    .frame(minWidth: 80)
+                                                    .padding(.horizontal, 20)
+                                                    .padding(.vertical, 10)
+                                                    .background(
+                                                        viewModel.user.settings.difficultyPreference == difficulty ?
+                                                        Color(hex: "#ff2300") : Color.white.opacity(0.1)
+                                                    )
+                                                    .cornerRadius(10)
+                                            }
                                         }
                                     }
+                                    .padding(.horizontal, 20)
                                 }
-                                .padding(.horizontal, 20)
                             }
                             .padding(.vertical, 15)
                         }
